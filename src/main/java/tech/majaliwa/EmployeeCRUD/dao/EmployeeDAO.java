@@ -8,4 +8,5 @@ public interface EmployeeDAO {
 
     List<Employee> allEmployees();
     Employee getEmployeeByID(int id);
+    Employee addNewEmployee(String fName, String lName, String email);
 }

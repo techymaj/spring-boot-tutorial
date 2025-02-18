@@ -3,6 +3,7 @@ package tech.majaliwa.EmployeeCRUD.services;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import tech.majaliwa.EmployeeCRUD.dao.EmployeeDAO;
 import tech.majaliwa.EmployeeCRUD.models.Employee;
 
@@ -32,5 +33,13 @@ public class EmployeeImpl implements EmployeeDAO {
             }
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public Employee addNewEmployee(String fName, String lName, String email) {
+        Employee newEmployee = new Employee(fName, lName, email);
+        entityManager.persist(newEmployee);
+        return newEmployee;
     }
 }
