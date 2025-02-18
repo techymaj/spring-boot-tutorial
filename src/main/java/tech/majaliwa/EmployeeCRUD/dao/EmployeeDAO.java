@@ -10,4 +10,5 @@ public interface EmployeeDAO {
     Employee getEmployeeByID(int id);
     Employee addNewEmployee(String fName, String lName, String email);
     Employee updateEmployeeEmail(int id, String email);
+    void deleteEmployee(int id);
 }

@@ -51,4 +51,11 @@ public class EmployeeImpl implements EmployeeDAO {
         entityManager.merge(employee);
         return employee;
     }
+
+    @Override
+    @Transactional
+    public void deleteEmployee(int id) {
+        var employee = entityManager.find(Employee.class, id);
+        entityManager.remove(employee);
+    }
 }

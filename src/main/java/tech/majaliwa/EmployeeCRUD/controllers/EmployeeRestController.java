@@ -49,4 +49,14 @@ public class EmployeeRestController {
     ) {
         return employee.updateEmployeeEmail(employeeID, newEmail);
     }
+
+    @DeleteMapping("/{employeeID}")
+    public String deleteEmployeeByID(@PathVariable int employeeID) {
+        var foundEmployee = employee.getEmployeeByID(employeeID);
+        if (foundEmployee != null) {
+            employee.deleteEmployee(employeeID);
+            return "Deleted employee with ID: " + employeeID;
+        }
+        throw new EmployeeNotFoundException("No such employee with ID: " + employeeID);
+    }
 }
