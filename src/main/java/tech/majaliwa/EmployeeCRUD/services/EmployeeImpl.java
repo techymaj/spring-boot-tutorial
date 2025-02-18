@@ -26,11 +26,10 @@ public class EmployeeImpl implements EmployeeDAO {
 
     @Override
     public Employee getEmployeeByID(int id) {
-        var list  = entityManager.createQuery("FROM Employee", Employee.class).getResultList();
-        for (var employee : list) {
-            if (employee.getId() == id) {
-                return employee;
-            }
+        var employee = entityManager.find(Employee.class, id);
+
+        if (employee.getId() == id) {
+            return employee;
         }
         return null;
     }
@@ -41,5 +40,15 @@ public class EmployeeImpl implements EmployeeDAO {
         Employee newEmployee = new Employee(fName, lName, email);
         entityManager.persist(newEmployee);
         return newEmployee;
+    }
+
+    @Override
+    @Transactional
+    public Employee updateEmployeeEmail(int id, String email) {
+        var employee = entityManager.find(Employee.class, id);
+
+        employee.setEmail(email);
+        entityManager.merge(employee);
+        return employee;
     }
 }

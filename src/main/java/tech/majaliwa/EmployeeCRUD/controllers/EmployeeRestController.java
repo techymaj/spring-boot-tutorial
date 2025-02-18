@@ -41,4 +41,12 @@ public class EmployeeRestController {
                 "wilfriedmajaliwa@gmail.com"
         );
     }
+
+    @PutMapping("/{employeeID}/{newEmail}")
+    public Employee updateEmployeeEmail(
+            @PathVariable int employeeID,
+            @PathVariable String newEmail
+    ) {
+        return employee.updateEmployeeEmail(employeeID, newEmail);
+    }
 }
