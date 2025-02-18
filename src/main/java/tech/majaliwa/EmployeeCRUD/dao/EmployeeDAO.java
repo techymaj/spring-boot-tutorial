@@ -1,0 +1,10 @@
+package tech.majaliwa.EmployeeCRUD.dao;
+
+import tech.majaliwa.EmployeeCRUD.models.Employee;
+
+import java.util.List;
+
+public interface EmployeeDAO {
+
+    List<Employee> allEmployees();
+}
