@@ -22,4 +22,15 @@ public class EmployeeImpl implements EmployeeDAO {
     public List<Employee> allEmployees() {
         return entityManager.createQuery("FROM Employee", Employee.class).getResultList();
     }
+
+    @Override
+    public Employee getEmployeeByID(int id) {
+        var list  = entityManager.createQuery("FROM Employee", Employee.class).getResultList();
+        for (var employee : list) {
+            if (employee.getId() == id) {
+                return employee;
+            }
+        }
+        return null;
+    }
 }
