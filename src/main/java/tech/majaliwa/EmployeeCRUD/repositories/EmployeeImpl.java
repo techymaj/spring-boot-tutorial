@@ -39,7 +39,6 @@ public class EmployeeImpl implements EmployeeDAO {
     }
 
     @Override
-    @Transactional
     public Employee addNewEmployee(String fName, String lName, String email) {
         Employee newEmployee = new Employee(fName, lName, email);
         entityManager.persist(newEmployee);
@@ -47,7 +46,6 @@ public class EmployeeImpl implements EmployeeDAO {
     }
 
     @Override
-    @Transactional
     public Employee updateEmployeeEmail(int id, String email) {
         var employee = entityManager.find(Employee.class, id);
 
@@ -57,7 +55,6 @@ public class EmployeeImpl implements EmployeeDAO {
     }
 
     @Override
-    @Transactional
     public void deleteEmployee(int id) {
         var employee = entityManager.find(Employee.class, id);
         entityManager.remove(employee);
