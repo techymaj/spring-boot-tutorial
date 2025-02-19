@@ -1,15 +1,15 @@
-package tech.majaliwa.EmployeeCRUD.services;
+package tech.majaliwa.EmployeeCRUD.repositories;
 
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tech.majaliwa.EmployeeCRUD.dao.EmployeeDAO;
 import tech.majaliwa.EmployeeCRUD.models.Employee;
 
 import java.util.List;
 
-@Controller
+@Repository
 public class EmployeeImpl implements EmployeeDAO {
 
     private final EntityManager entityManager;
@@ -27,6 +27,10 @@ public class EmployeeImpl implements EmployeeDAO {
     @Override
     public Employee getEmployeeByID(int id) {
         var employee = entityManager.find(Employee.class, id);
+
+        if (employee == null) {
+            return null;
+        }
 
         if (employee.getId() == id) {
             return employee;

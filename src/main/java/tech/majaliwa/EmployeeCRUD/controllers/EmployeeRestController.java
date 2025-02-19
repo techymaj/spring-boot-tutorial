@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tech.majaliwa.EmployeeCRUD.exceptions.EmployeeNotFoundException;
 import tech.majaliwa.EmployeeCRUD.models.Employee;
-import tech.majaliwa.EmployeeCRUD.services.EmployeeImpl;
+import tech.majaliwa.EmployeeCRUD.services.EmployeeService;
 
 import java.util.List;
 
@@ -12,21 +12,22 @@ import java.util.List;
 @RequestMapping("api/employees")
 public class EmployeeRestController {
 
-    private final EmployeeImpl employee;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeRestController(EmployeeImpl employee) {
-        this.employee = employee;
+    public EmployeeRestController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
+
 
     @GetMapping("")
     public List<Employee> getAllEmployees() {
-        return employee.allEmployees();
+        return employeeService.allEmployees();
     }
 
     @GetMapping("/{employeeID}")
     public Employee getEmployeeByID(@PathVariable int employeeID) {
-        var foundEmployee = employee.getEmployeeByID(employeeID);
+        var foundEmployee = employeeService.getEmployeeByID(employeeID);
         if (foundEmployee != null) {
             return foundEmployee;
         }
@@ -35,7 +36,7 @@ public class EmployeeRestController {
 
     @PostMapping("")
     public Employee addNewEmployee() {
-        return employee.addNewEmployee(
+        return employeeService.addNewEmployee(
                 "Wilfried",
                 "Majaliwa",
                 "wilfriedmajaliwa@gmail.com"
@@ -47,14 +48,14 @@ public class EmployeeRestController {
             @PathVariable int employeeID,
             @PathVariable String newEmail
     ) {
-        return employee.updateEmployeeEmail(employeeID, newEmail);
+        return employeeService.updateEmployeeEmail(employeeID, newEmail);
     }
 
     @DeleteMapping("/{employeeID}")
     public String deleteEmployeeByID(@PathVariable int employeeID) {
-        var foundEmployee = employee.getEmployeeByID(employeeID);
+        var foundEmployee = employeeService.getEmployeeByID(employeeID);
         if (foundEmployee != null) {
-            employee.deleteEmployee(employeeID);
+            employeeService.deleteEmployee(employeeID);
             return "Deleted employee with ID: " + employeeID;
         }
         throw new EmployeeNotFoundException("No such employee with ID: " + employeeID);
