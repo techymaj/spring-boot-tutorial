@@ -2,7 +2,6 @@ package tech.majaliwa.EmployeeCRUD.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tech.majaliwa.EmployeeCRUD.exceptions.EmployeeNotFoundException;
 import tech.majaliwa.EmployeeCRUD.models.Employee;
 import tech.majaliwa.EmployeeCRUD.services.EmployeeService;
 
@@ -19,7 +18,6 @@ public class EmployeeRestController {
         this.employeeService = employeeService;
     }
 
-
     @GetMapping("")
     public List<Employee> getAllEmployees() {
         return employeeService.allEmployees();
@@ -27,11 +25,7 @@ public class EmployeeRestController {
 
     @GetMapping("/{employeeID}")
     public Employee getEmployeeByID(@PathVariable int employeeID) {
-        var foundEmployee = employeeService.getEmployeeByID(employeeID);
-        if (foundEmployee != null) {
-            return foundEmployee;
-        }
-        throw new EmployeeNotFoundException("No such employee with ID: " + employeeID);
+        return employeeService.getEmployeeByID(employeeID);
     }
 
     @PostMapping("")
@@ -53,11 +47,7 @@ public class EmployeeRestController {
 
     @DeleteMapping("/{employeeID}")
     public String deleteEmployeeByID(@PathVariable int employeeID) {
-        var foundEmployee = employeeService.getEmployeeByID(employeeID);
-        if (foundEmployee != null) {
-            employeeService.deleteEmployee(employeeID);
-            return "Deleted employee with ID: " + employeeID;
-        }
-        throw new EmployeeNotFoundException("No such employee with ID: " + employeeID);
+        employeeService.deleteEmployee(employeeID);
+        return "Deleted employee with ID: " + employeeID;
     }
 }
